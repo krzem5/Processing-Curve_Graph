@@ -1,1 +1,1 @@
-# Processing - Curvegraph
+# Processing - Curve Graph

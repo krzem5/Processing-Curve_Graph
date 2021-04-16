@@ -1,3 +1,6 @@
+path_classifiers:
+  generated:
+    - exclude: "build/*.java"
 queries:
   - include: "*"
   - exclude: cpp/poorly-documented-function
@@ -10,6 +13,15 @@ queries:
   - exclude: py/empty-except
   - exclude: py/redundant-global-declaration
 extraction:
+  java:
+    prepare:
+      packages:
+        - python3.8
+    index:
+      build_command:
+        - python3.8 build.py
+      java_version: 1.8
+      xml_mode: disabled
   python:
     python_setup:
       version: 3
