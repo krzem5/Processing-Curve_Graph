@@ -1,30 +1,35 @@
-static float minX=-30;
-static float maxX=30;
-static float minY=-30;
-static float maxY=30;
-static float points=1000;
-float ANGLE=0;
-int TIME=0;
-float PROC=0;
-void setup() {
-  size(600, 600);
-  strokeCap(ROUND);
+final float MIN_X=-30;
+final float MAX_X=30;
+final float MIN_Y=-30;
+final float MAX_Y=30;
+final float POINT_COUNT=1000;
+
+
+float a=0;
+int tm=0;
+
+
+
+void setup(){
+	size(600,600);
+	strokeCap(ROUND);
 }
-void draw() {
-  background(255);
-  stroke(130);
-  strokeWeight(2);
-  line(0,map(0,minY,maxY,0,height),width,map(0,minY,maxY,0,height));
-  line(map(0,minX,maxX,0,width),0,map(0,minX,maxX,0,width),height);
-  stroke(0);
-  noFill();
-  beginShape();
-  TIME=0;
-  PROC=0;
-  for (ANGLE=0; ANGLE<PI*2; ANGLE+=PI*2/points) {
-    vertex(map(X(),minX,maxX,0,width),map(Y(),minY,maxY,0,height));
-    TIME++;
-    PROC=TIME/points;
-  }
-  endShape();
+
+
+
+void draw(){
+	background(255);
+	stroke(130);
+	strokeWeight(2);
+	line(0,map(0,MIN_Y,MAX_Y,0,height),width,map(0,MIN_Y,MAX_Y,0,height));
+	line(map(0,MIN_X,MAX_X,0,width),0,map(0,MIN_X,MAX_X,0,width),height);
+	stroke(0);
+	noFill();
+	beginShape();
+	tm=0;
+	for (a=0;a<PI*2;a+=PI*2/POINT_COUNT){
+		vertex(map(X(tm/POINT_COUNT),MIN_X,MAX_X,0,width),map(Y(tm/POINT_COUNT),MIN_Y,MAX_Y,0,height));
+		tm++;
+	}
+	endShape();
 }
