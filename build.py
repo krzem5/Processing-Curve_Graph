@@ -40,12 +40,21 @@ def _preprocess(dt,imp):
 			bf.append([b"",-1])
 		if (not s and not c and dt[i:i+1]==b"#"):
 			for j in range(0,6):
-				if (dt[i+j+1:i+j+2] not in b"0123456789abcdef"):
+				if (dt[i+j+1:i+j+2] not in b"0123456789abcdefABCDEF"):
 					raise RuntimeError("Invalid Color!")
 			dt=dt[:i]+b"0xff"+dt[i+1:]
 			i-=1
 		elif (not s and not c and (i==0 or dt[i-1:i] not in IDENTIFIER_CHARS) and dt[i:i+5]==b"color" and (i+5>=len(dt) or dt[i+5:i+6] not in IDENTIFIER_CHARS)):
-			dt=dt[:i]+b"int"+dt[i+5:]
+			j=i+0
+			i+=5
+			while (dt[i:i+1] in WHITE_SPACE_CHARS):
+				i+=1
+			if (dt[i:i+1]!=b"("):
+				dt=dt[:j]+b"int "+dt[i:]
+				if (b==0 and not c and not s):
+					bf[-1][0]=bf[-1][0][:-1]+b"int"
+			elif (b==0 and not c and not s):
+				bf[-1][0]+=b"olor"+b" "*(i-j-5)
 			i-=1
 		elif (not s and not c and (i==0 or dt[i-1:i] not in IDENTIFIER_CHARS) and dt[i:i+4]==b"byte" and (i+4>=len(dt) or dt[i+4:i+5] not in IDENTIFIER_CHARS)):
 			j=i+0
